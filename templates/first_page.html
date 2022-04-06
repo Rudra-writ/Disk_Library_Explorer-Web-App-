@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Library Management System
+        </title>
+       
+        <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% load static %}
+  <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" > 
+  <link href="{% static 'insert_records.css' %}" rel="stylesheet" >
+
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+    </head>
+    <body id = "grad">
+        <center>
+         
+            <div id ="Logo"> 
+                <img src = "static/Logo.png" width = "130" height = "71" >
+            </div>
+
+        <div id = "heading" >
+          
+    
+        <h1 > Explore The RFA Library </h1>
+        
+        </div>
+    
+    </br>
+</br>
+</br>
+
+
+        
+        <form action="{% url "first_page" %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <table>
+             <tr>
+                 <td style = "font-family: monospace;">File Search:</td>
+                 <td><input type="text" name="file" placeholder="Enter File Name"  class ="form-control"> </td>
+                 <td><input type="submit" name = "search2" value = "Search"   class = "btn btn-outline-primary"></td>
+                 </tr>
+                </table>
+               </br>
+                <table>
+                 <tr>
+                <td style = "font-family: monospace;">Content Search:</td>
+                 <td> <input type="text" name="keyword" placeholder="Enter Keywords" class ="form-control"></td>
+
+                  <td><input list = "directories" placeholder="Select Directories"  name = "directory" class ="form-control"> </td>
+                  <datalist id="directories">
+                    {% for directory in directories %}
+                    <option>{{directory}} </option>
+                    {% endfor %}
+
+
+                  </datalist>
+                   
+
+                 <td><input type="number" name = "pages" min = "1" max ="1000000" placeholder = "Number of pages" value="5" class ="form-control"> </td>
+                 <td><input type="submit" name = "search" value = "Search"  class = "btn btn-outline-primary"></td>
+             </tr>
+           
+            
+             
+                </table>
+              </br>
+            </br>
+               <h4 style = "font-family: monospace;"> Results Of File Search </h4>
+               <div style = " height: 120px; width: 1000px; overflow: auto; " >
+                <table align = center border =1  class = "table table-hover table-sm table-bordered" style = "font-family: monospace;">
+  
+                  <thead>
+                    <tr>
+                      <th style = "position:sticky; top: 0; background:#eee; ">File Location</th>
+                      
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% if file_names %}  
+                  {% for rows in file_names %}
+                    <tr>
+                      <td><a href="{{rows.file}}" >{{rows.file}}</a></td>
+                      
+                     
+                    </tr>
+                  {% endfor %}
+                  {% endif %}
+                  </tbody>
+                 
+  
+                </table>
+              </br>
+            </br>
+          </br>
+           
+                </div>
+               <br>
+               <h4 style = "font-family: monospace;"> Searched Keywords were found in following files</h4>
+               <div style = " height: 200px; width: 1000px; overflow: auto; "  id= "fixTableHead">
+                <table align = center border =1  class = "table table-hover table-sm table-bordered" style = "font-family: monospace;">
+  
+                  <thead>
+                    <tr>
+                      <th style = "position:sticky; top: 0; background:#eee; ">File Location</th>
+                      <th style = "position:sticky; top: 0; background:#eee; ">Pages</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% if content %}  
+                  {% for rows in content %}
+                    <tr>
+                      <td ><a href="S:\LIBRARY\{{rows.file}}" >{{rows.file}}</a></td>
+                      <td ><a href="S:\LIBRARY\{{rows.page}}" >{{rows.page}}</a></td>
+                      
+                     
+                    </tr>
+                  {% endfor %}
+                  {% endif %}
+                  </tbody>
+                 
+  
+                </table>
+               
+           
+                </div>
+               
+    </center>
+       
+    </body>
+</html>
